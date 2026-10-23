@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GLITCH — See What Others Miss | Perception Puzzle Game</title>
+  <meta name="description" content="A fast-paced, 30-second perception challenge game exploring human intuition versus machine perception. Spot the glitch, detect impossible geometry, and identify temporal changes.">
+  
+  <!-- Modern Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- Header with Brand and Global Actions -->
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <span class="brand-glitch-badge">SIM // 03</span>
+        <div>
+          <h1 class="brand-title">GLITCH <span class="brand-subtitle">// Perception Lab</span></h1>
+        </div>
+      </div>
+      <div class="header-controls">
+        <button id="btn-restart-header" class="btn-cyber btn-cyber-sm" title="Reset game without reload (Press R)" aria-label="Restart Challenge">
+          <span>Restart</span>
+          <span class="btn-key-badge">R</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Global HUD Bar (Active during challenges) -->
+    <div id="hud-bar" class="hud-bar" style="display: none;" role="region" aria-label="Game Status Bar">
+      <div class="hud-item">
+        <span class="hud-label">Challenge</span>
+        <span id="hud-round-val" class="hud-value highlight">01 / 03</span>
+      </div>
+      <div class="hud-item progress-col">
+        <span class="hud-label">Protocol Progress</span>
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">Elapsed Time</span>
+        <span id="hud-timer-val" class="hud-value highlight">0.0s</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">Score</span>
+        <span id="hud-score-val" class="hud-value">3000</span>
+      </div>
+    </div>
+
+    <!-- Main Screens Viewport -->
+    <main id="main-viewport">
+      <!-- 1. START SCREEN -->
+      <section id="screen-start" class="screen active" aria-labelledby="start-heading">
+        <div class="start-card">
+          <div class="start-badge">RAPID PERCEPTION AUDIT</div>
+          <h2 id="start-heading" class="start-title">GLITCH — See What Others Miss</h2>
+          <p class="start-pitch">
+            Three quick perception challenges. <span class="pitch-highlight">Can you spot what others miss?</span>
+          </p>
+
+          <div class="start-features-grid">
+            <div class="feature-box">
+              <div class="feature-num">CHALLENGE 01</div>
+              <div class="feature-title">Spot the Glitch</div>
+              <div class="feature-desc">Scan circuit topology to identify the corrupted anomalous trace.</div>
+            </div>
+            <div class="feature-box">
+              <div class="feature-num">CHALLENGE 02</div>
+              <div class="feature-title">Reality Check</div>
+              <div class="feature-desc">Spot the impossible 3D optical construct that breaks Euclidean space.</div>
+            </div>
+            <div class="feature-box">
+              <div class="feature-num">CHALLENGE 03</div>
+              <div class="feature-title">What Changed?</div>
+              <div class="feature-desc">Compare dual console telemetry feeds and catch the mutated asset.</div>
+            </div>
+          </div>
+
+          <div class="start-action-row">
+            <button id="btn-start-game" class="btn-cyber btn-cyber-primary" style="font-size: 1.05rem; padding: 0.85rem 2.5rem;">
+              <span>Initiate Protocol</span>
+              <span class="btn-key-badge">Space / Enter</span>
+            </button>
+            <p style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono);">
+              Target completion: &lt; 30 seconds &bull; Zero external trackers
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. GAME / CHALLENGE SCREEN -->
+      <section id="screen-game" class="screen" aria-live="polite">
+        <div class="challenge-card">
+          <div class="challenge-header">
+            <div>
+              <div id="challenge-round-tag" class="round-tag">ROUND // 01</div>
+              <h2 id="challenge-title" class="challenge-name">Spot the Glitch</h2>
+              <p id="challenge-instruction" class="challenge-instruction">
+                Identify the anomalous node among the four candidates.
+              </p>
+            </div>
+            <div class="challenge-badge-meta">
+              <div class="hint-pill">
+                <span>⚡</span>
+                <span id="challenge-hint-text">Observe radial symmetry</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Interactive Challenge Area -->
+          <div id="challenge-interactive-area" role="group" aria-label="Puzzle options">
+            <!-- Populated dynamically via game.js & levels.js -->
+          </div>
+
+          <!-- Feedback notification banner -->
+          <div id="feedback-banner" class="feedback-banner" role="status" aria-live="assertive">
+            <!-- Populated on choice: PASS / FAIL -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. WIN / COMPLETION SCREEN -->
+      <section id="screen-win" class="screen" aria-labelledby="win-heading">
+        <div class="win-card">
+          <div class="win-hero">
+            <div class="win-badge">PROTOCOL COMPLETE</div>
+            <h2 id="win-heading" class="win-title">Neural Calibration Cleared</h2>
+            <p class="win-quote">You perceived the anomalies with precision.</p>
+          </div>
+
+          <!-- Quick Stats Summary -->
+          <div class="stats-summary-grid">
+            <div class="stat-box">
+              <div class="stat-box-label">Final Score</div>
+              <div id="win-score-val" class="stat-box-val lime">2840</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-label">Total Time</div>
+              <div id="win-time-val" class="stat-box-val violet">14.2s</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-label">Attempts</div>
+              <div id="win-attempts-val" class="stat-box-val">3 / 3</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-label">Perception Rank</div>
+              <div id="win-rating-val" class="stat-box-val lime" style="font-size: 1rem; padding-top: 0.35rem;">SUPERIOR INTUITION</div>
+            </div>
+          </div>
+
+          <!-- Optional Session Analytics Display -->
+          <div class="analytics-section">
+            <button id="analytics-toggle-btn" class="analytics-toggle-btn" type="button" aria-expanded="false" aria-controls="analytics-content">
+              <span><strong>Session Analytics & Breakdown</strong> (Optional Metric Log)</span>
+              <span id="analytics-toggle-icon" aria-hidden="true">▼</span>
+            </button>
+            <div id="analytics-content" class="analytics-content">
+              <table class="analytics-table" aria-label="Performance details per round">
+                <thead>
+                  <tr>
+                    <th>Challenge Phase</th>
+                    <th>Attempts</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="analytics-table-body">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+              <p class="analytics-disclaimer">
+                * Note: These metrics record reaction speed and visual acuity in this session. They do not claim to verify human identity or serve as biometric proof.
+              </p>
+            </div>
+          </div>
+
+          <div class="win-controls">
+            <button id="btn-play-again" class="btn-cyber btn-cyber-primary" style="padding: 0.75rem 2rem;">
+              <span>Run Protocol Again</span>
+              <span class="btn-key-badge">Space</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer with Mandatory Disclaimer -->
+    <footer class="app-footer">
+      <div class="disclaimer-banner">
+        <span class="disclaimer-accent">&bull;</span> Experimental puzzle game &mdash; not a real security CAPTCHA.
+      </div>
+    </footer>
+  </div>
+
+  <!-- Game Scripts -->
+  <script type="module" src="game.js"></script>
+</body>
+</html>
